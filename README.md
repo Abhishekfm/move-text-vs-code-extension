@@ -1,6 +1,6 @@
 # Move to left README
 
-# MyExtension
+## MyExtension
 
 This is a VSCode extension that provides a left sidebar with dynamically updated content based on the selected text in the editor.
 
@@ -12,7 +12,7 @@ This is a VSCode extension that provides a left sidebar with dynamically updated
 - The content of the webview can be updated dynamically by executing the "Move to Left Sidebar" command multiple times with different selected text in the editor.
 
 
-# Running the Extension
+## Running the Extension
 - Open VS Code
 - git clone https://github.com/Abhishekfm/move-text-vs-code-extension
 - open the folder in new window of VS Code
