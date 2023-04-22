@@ -1,7 +1,9 @@
+// Import the VS Code module
 const vscode = require('vscode');
 
+// Function that gets called when the extension is activated
 function activate(context) {
-  // Register the command
+  // Create a webview panel
   const panel = vscode.window.createWebviewPanel(
     'left-sidebar-view',
     'Left Holder',
@@ -12,58 +14,52 @@ function activate(context) {
       retainContextWhenHidden: true
     }
   );
-  
+
+  // Register a webview view provider
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider('left-sidebar', {
+      // This function is called when the webview is first created
       resolveWebviewView(webviewView, context) {
         console.log('Resolving webview view');
         console.log(context);
-        // Handle messages sent from the webview
+
+        // Get the initial contents of the webview
         let msg = getWebviewContent();
-        // webviewView.webview.onDidReceiveMessage(async (message) => {
-        //   if (message.command === 'updateContent') {
-        //     webviewView.webview.html = message.content;
-        //     msg = message.content;
-        //   }
-        // });
-  
+        webviewView.webview.onDidReceiveMessage(message => {
+          if (message.command === 'updateContent') {
+              webviewView.webview.html = message.content;
+          }
+        });
+
         // Set the initial contents of the webview
         webviewView.webview.html = msg;
-  
-        // Send a message to the webview view
-        
       }
     })
   );
-  
-  // Load the HTML content into the webview
-  
+
+  // Register a command that moves the selected code to the left sidebar
   let click = 0;
-  // let webviewView = undefined;
   let moveToLeftSidebarCommand = vscode.commands.registerCommand('myExtension.moveToLeftSidebar', () => {
     // Get the currently selected code
     const editor = vscode.window.activeTextEditor;
     const selectedText = editor.selection;
     const text = editor.document.getText(selectedText);
     click += 1;
-    // panel.reveal();
+
+    // Show the left sidebar panel
     vscode.commands.executeCommand('workbench.view.extension.left-sidebar-view');
+
+    // Update the contents of the webview
     panel.webview.html = getWebviewContent();
-    panel.webview.postMessage({ command: 'refactor', additionalData: text });
-    // panel.webview.html = newHtml;
-    
-    // Define the webview view provider
-
-    if (!editor) {
-      vscode.window.showErrorMessage('No active text editor found.');
-      return;
+    if(click >= 1){
+      panel.webview.postMessage({ command: 'refactor', additionalData: text });
     }
-    const selection = editor.selection;
-    const code = editor.document.getText(selection);
-
-    // Send a message to the webview to update the left sidebar
-    // panel.webview.postMessage({ type: 'webview', payload: { code } });
   });
+
+  // Register the command with the extension's context
+  context.subscriptions.push(moveToLeftSidebarCommand);
+
+  // Function that returns the HTML content of the webview
   function getWebviewContent() {
     return `
     <html>
@@ -93,19 +89,15 @@ function activate(context) {
       </body>
     </html>
   `;
+  }
 }
 
-  // Register the command with the extension's context
-  context.subscriptions.push(moveToLeftSidebarCommand);
-
-  // Create a webview panel
-  
-}
-
+// Function that gets called when the extension is deactivated
 function deactivate() {
   // Clean up resources when the extension is deactivated
 }
 
+// Export the activate and deactivate functions
 module.exports = {
   activate,
   deactivate
