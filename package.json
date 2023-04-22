@@ -1,0 +1,71 @@
+{
+  "name": "demo-software",
+  "displayName": "demo software",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.77.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "contributes": {
+    "menus": {
+      "editor/context": [
+        {
+          "command": "myExtension.moveToLeftSidebar",
+          "when": "editorHasSelection && editorTextFocus"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "myExtension.moveToLeftSidebar",
+        "title": "Move to Left Sidebar",
+        "category": "My Extension"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "left-sidebar-view",
+          "title": "LeftHolder",
+          "icon": "assets/dance.svg"
+        }
+      ]
+    },
+    "views": {
+      "left-sidebar-view": [
+        {
+          "type": "webview",
+          "id": "left-sidebar",
+          "name": "LeftHolder",
+          "icon": "assets/dance.svg",
+          "contextualTitle": "LeftHolder"
+        }
+      ]
+    }
+  },
+  
+  "activationEvents": [
+    "onCommand:vstodo.demo-software.helloWorld",
+    "onView:package-sidebar-view"
+  ],
+  "main": "./extension.js",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.77.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "eslint": "^8.36.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^4.9.5",
+    "@vscode/test-electron": "^2.3.0"
+  }
+}
