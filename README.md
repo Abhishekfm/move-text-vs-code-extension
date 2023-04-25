@@ -13,7 +13,10 @@ This is a VSCode extension that provides a left sidebar with dynamically updated
 
 
 ## Running the Extension
-- Open VS Code
-- git clone https://github.com/Abhishekfm/move-text-vs-code-extension
-- open the folder in new window of VS Code
-- Press f5 key to run
+Make sure you have Node.js and Git installed
+1. Open VS Code
+2. On terminal hit git clone https://github.com/Abhishekfm/move-text-vs-code-extension
+3. cd move-text-vs-code-extension
+4. Rename move-text-vs-code-extension folder to demo-software
+5. npm install (or) yarn install
+6. open extension.js file in VS Code and then Press f5 key to run
