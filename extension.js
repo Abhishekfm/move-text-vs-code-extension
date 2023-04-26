@@ -66,6 +66,13 @@ function activate(context) {
       <head>
         <style>
           /* Add your CSS styles here */
+          #sidebar-content{
+            background-color: #fff;
+            color:#000;
+            font-weight:600;
+            border-radius:10px;
+            padding:5px;
+          }
         </style>
       </head>
       <body>
